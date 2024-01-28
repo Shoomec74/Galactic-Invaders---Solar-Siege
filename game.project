@@ -1,0 +1,23 @@
+[bootstrap]
+main_collection = /main/proxy.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1792
+height = 1024
+fullscreen = 0
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = Galactic Invaders - Solar Siege
+version = 0.0.1
+dependencies#0 = https://github.com/Insality/druid/archive/master.zip
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
+

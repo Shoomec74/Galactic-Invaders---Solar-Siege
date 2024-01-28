@@ -1,0 +1,11 @@
+function init(self)
+	msg.post(".", "acquire_input_focus") -- <1>
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.released then -- <2>
+		if gui.pick_node(gui.get_node("level1"), action.x, action.y) then -- <3>
+			msg.post("proxy:/controller#controller", "show_level1") -- <4>
+		end
+	end
+end

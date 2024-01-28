@@ -1,0 +1,28 @@
+local function show(self, proxy)
+	if self.current_proxy then
+		print("Выгрузка текущей коллекции: " .. tostring(self.current_proxy))
+		msg.post(self.current_proxy, "unload")
+		self.current_proxy = nil
+	end
+	print("Загрузка новой коллекции: " .. tostring(proxy))
+	msg.post(proxy, "async_load")
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus") -- <1>
+	self.current_proxy = nil -- <2>
+	msg.post("#", "show_menu") -- <3>
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("show_menu") then -- <4>
+		show(self, "#menu")
+	elseif message_id == hash("show_level1") then
+		show(self, "#level1proxy")
+	elseif message_id == hash("proxy_loaded") then -- <9>
+		self.current_proxy = sender -- <10>
+		msg.post(sender, "enable") -- <11>
+	elseif message_id == hash("proxy_unloaded") then
+		print("Unloaded", sender)
+	end
+end
